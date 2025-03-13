@@ -1,0 +1,316 @@
+:root {
+  --fluid-heading: clamp(1.8rem, 4vw, 2.5rem);
+  --fluid-subheading: clamp(1.2rem, 3vw, 1.5rem);
+  --fluid-text: clamp(0.9rem, 2vw, 1.1rem);
+  --card-width: min(100% - 2rem, 600px);
+}
+
+.customers-section {
+  padding: clamp(1rem, 3vw, 2rem);
+  background: linear-gradient(135deg, #f9f9f9, #f0f7f0);
+  text-align: center;
+  overflow: hidden;
+  perspective: 1000px;
+}
+
+.customers-section h1 {
+  font-size: var(--fluid-heading);
+  color: #2d5a27;
+  margin-bottom: 1rem;
+  position: relative;
+  display: inline-block;
+}
+
+.customers-section h1::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #4caf50, #81c784);
+}
+
+.subtitle {
+  font-size: var(--fluid-text);
+  margin-bottom: clamp(1.5rem, 4vw, 3rem);
+  color: #555;
+}
+
+/* Carousel Container */
+.carousel-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 1rem 0;
+  perspective: 1000px;
+}
+
+.carousel-track {
+  position: relative;
+  height: 400px;
+  margin: 0 auto;
+  transform-style: preserve-3d;
+}
+
+/* Customer Cards */
+.customer-card {
+  position: absolute;
+  width: var(--card-width);
+  max-width: 600px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: clamp(1rem, 3vw, 2rem);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.5s ease;
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: center center;
+}
+
+.customer-card.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.customer-card.active.next {
+  animation: rotateNextSlide 0.5s ease-out forwards;
+}
+
+.customer-card.active.prev {
+  animation: rotatePrevSlide 0.5s ease-out forwards;
+}
+
+.customer-card:not(.active).next {
+  animation: hideNextSlide 0.5s ease-out forwards;
+}
+
+.customer-card:not(.active).prev {
+  animation: hidePrevSlide 0.5s ease-out forwards;
+}
+
+@keyframes rotateNextSlide {
+  from {
+    opacity: 0;
+    transform: translateX(-150%) rotateY(45deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) rotateY(0);
+  }
+}
+
+@keyframes rotatePrevSlide {
+  from {
+    opacity: 0;
+    transform: translateX(50%) rotateY(-45deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) rotateY(0);
+  }
+}
+
+@keyframes hideNextSlide {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) rotateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(150%) rotateY(-45deg);
+  }
+}
+
+@keyframes hidePrevSlide {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) rotateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-150%) rotateY(45deg);
+  }
+}
+
+.customer-image {
+  width: clamp(80px, 15vw, 120px);
+  height: clamp(80px, 15vw, 120px);
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  padding: 5px;
+  background: linear-gradient(45deg, #4caf50, #81c784);
+  transform-style: preserve-3d;
+}
+
+.customer-card img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid white;
+}
+
+.customer-card h2 {
+  font-size: var(--fluid-subheading);
+  color: #2d5a27;
+  margin-bottom: 0.5rem;
+}
+
+.customer-card .location {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.customer-card .feedback {
+  font-size: 1.1rem;
+  color: #444;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* Navigation Buttons */
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.carousel-button:hover {
+  background: #4caf50;
+  color: white;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-button.prev {
+  left: 20px;
+}
+
+.carousel-button.next {
+  right: 20px;
+}
+
+/* Dots Navigation */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 2rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background-color: #ddd;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.dot.active {
+  background-color: #4caf50;
+  transform: scale(1.2);
+}
+
+/* Responsive Design */
+/* Mobile */
+@media (max-width: 480px) {
+  .carousel-track {
+    height: 500px;
+  }
+  
+  .customer-card {
+    padding: 1rem;
+  }
+  
+  .carousel-button {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .dot {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .customers-section {
+    padding: 2rem 1rem;
+  }
+
+  .carousel-container {
+    padding: 0 1rem;
+  }
+
+  .customer-card {
+    padding: 1.5rem;
+  }
+
+  .customer-image {
+    width: 100px;
+    height: 100px;
+  }
+
+  .carousel-button {
+    width: 35px;
+    height: 35px;
+  }
+
+  .carousel-button.prev {
+    left: 10px;
+  }
+
+  .carousel-button.next {
+    right: 10px;
+  }
+}
+  /* Tablet */
+@media (max-width: 1024px) {
+  .carousel-track {
+    height: 450px;
+  }
+  
+  .carousel-button {
+    top: auto;
+    bottom: 0;
+    transform: none;
+  }
+}
+
+/* Touch devices */
+@media (hover: none) {
+  .customer-card, .carousel-button {
+    transition: none;
+  }
+  
+  .carousel-button:hover {
+    transform: none;
+  }
+}
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .customer-card {
+    animation: none;
+  }
+}
+
